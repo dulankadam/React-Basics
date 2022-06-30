@@ -1,24 +1,22 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import MainNavi from './components/mainNavi/mainNavi'
+import PriceMonitor from './components/priceMonitor/priceMonitor'
+import PriceContext, { useStore } from './store';
+
 
 function App() {
+  const  value = useStore();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <React.Fragment>
+      <PriceContext.Provider value={value}>
+        <div className='container mt-4'>
+          <MainNavi/>          
+          <PriceMonitor/>
+        </div>
+      </PriceContext.Provider>    
+   </React.Fragment>
   );
 }
 
