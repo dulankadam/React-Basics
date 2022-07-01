@@ -19,8 +19,6 @@ export const useStore = () => {
 
     useEffect(
         () => {
-
-            console.log(process.env.PUBLIC_URL);
             const data = {
                 PriceListId: selectedPrice,
                 TickerId:selectedTicker
