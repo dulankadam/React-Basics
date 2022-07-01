@@ -2,14 +2,18 @@ import React, {useContext, useEffect,useState} from "react";
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
 import PriceContext, { useStore } from "../../store";
+import Moment from "moment";
 
 
 const PriceList = ({ data, cols }) => {
-    return (
+  if(!data || !data.length){
+    return <div></div>
+  }
+  return (
       <div>
-        <Table striped bordered hover>
+        <Table striped bordered hover size="sm">
           <thead>
-            <tr>
+            <tr size="sm">
               {cols.map((j, i) => (
                 <th key={i}>{j}</th>
               ))}
@@ -19,8 +23,8 @@ const PriceList = ({ data, cols }) => {
             {data.map((row, i) => {
               return (
                 <tr key={i}>
-                  <td>{row.id}</td>
-                  <td>{row.email}</td>
+                  <td size="sm">{Moment(row.time).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+                  <td size="sm">{row.price}</td>
                 </tr>
               );
             })}
@@ -31,24 +35,43 @@ const PriceList = ({ data, cols }) => {
   };
 
 const Dashboard = (props) => {
-   // const [data, setData] = useState({ cols: null, data: null });
+   
     const {priceList,setPriceList} = useContext(PriceContext);
+    const [priceList2,setPriceList2] = useState({data: [], cols:[]});
   
+
     useEffect(() => {
-      axios
-        .get(`https://reqres.in/api/users?page=2`)
+      setPriceList2(priceList);
+    },[priceList]);
+
+    useEffect(() => {
+
+    const data = {
+      PriceListId: 1,
+      TickerId:1
+      };
+
+    const options = {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          data: JSON.stringify(data),
+          url:"https://localhost:44358/api/PriceList/GetPriceList",
+          };
+
+
+      axios.request(options)
         .then((res) => {
-          const cols = Object.keys(res.data.data[0]).map((i) => i);
-          setPriceList({ data: res.data.data, cols });
+          const cols = Object.keys(res.data[0]).map((i) => i);
+          setPriceList({ data: res.data, cols });
         })
         .catch((err) => {
           console.log(err);
         });
     }, []);
   
-    return (
-      <div className="dashboard-content">
-        {priceList.data && <PriceList data={priceList.data} cols={priceList.cols} />}
+    return (         
+      <div className="dashboard-content">      
+        {priceList2.data && <PriceList data={priceList2.data} cols={priceList2.cols} />}
       </div>
     );
   };

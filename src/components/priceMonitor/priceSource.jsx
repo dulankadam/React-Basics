@@ -1,16 +1,21 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PriceContext, { useStore } from "../../store";
 
 function PriceSource(){
     
     const PriceOptions = [
-        { label: 'SRC1', value: '1' },
-        { label: 'SRC2', value: '2' },
-        { label: 'SRC3', value: '3' },
-        { label: 'SRC4', value: '4' },
+        { label: 'SRC 1', value: '1' },
+        { label: 'SRC 2', value: '2' },
+        { label: 'SRC 3', value: '3' },
+        { label: 'SRC 4', value: '4' },
+        { label: 'SRC 5', value: '5' },
+        { label: 'SRC 6', value: '6' },
+        { label: 'SRC 7', value: '7' },
+        { label: 'SRC 8', value: '8' },
+        { label: 'SRC 9', value: '9' },
+        { label: 'SRC 10', value: '10' },
       ];
 
-    //const [value, setPriceSourceList] = useState('');
     const {selectedPrice,setSelectedPrice} = useContext(PriceContext);
 
     const handlePriceSourceChange = (event) => {

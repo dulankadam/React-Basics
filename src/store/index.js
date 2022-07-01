@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-  
+
+
 export const PriceContext = React.createContext({
      selectedPrice:null,
      selectedTicker:null,
@@ -14,13 +15,33 @@ export const useStore = () => {
     const [selectedTicker, setSelectedTicker] = useState(1);
     const [priceList, setPriceList] = useState({data: [], cols:[]});
     
+    
+
     useEffect(
         () => {
-            axios
-                .get(`https://reqres.in/api/users?page=${selectedPrice}&ticker=${selectedTicker}`)
+
+            console.log(process.env.PUBLIC_URL);
+            const data = {
+                PriceListId: selectedPrice,
+                TickerId:selectedTicker
+            };
+        
+            const options = {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            data: JSON.stringify(data),
+            url:"https://localhost:44358/api/PriceList/GetPriceList",
+            };
+
+            axios.request(options)
                 .then((res) => {
-                    const cols = Object.keys(res.data.data[0]).map((i) => i);
-                setPriceList({ data: res.data.data, cols });
+                   if(res.data.length > 0) {
+                        const cols = Object.keys(res.data[0]).map((i) => i);                        
+                        setPriceList({ data: res.data, cols });
+                    }else{
+                        setPriceList({ data: null});
+                    }
+                    
                 })
         .catch((err) => {
           console.log(err);

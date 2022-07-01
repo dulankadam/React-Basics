@@ -8,6 +8,12 @@ function Ticker(){
         { label: 'TKR 2', value: '2' },
         { label: 'TKR 3', value: '3' },
         { label: 'TKR 4', value: '4' },
+        { label: 'TKR 5', value: '5' },
+        { label: 'TKR 6', value: '6' },
+        { label: 'TKR 7', value: '7' },
+        { label: 'TKR 8', value: '8' },
+        { label: 'TKR 9', value: '9' },
+        { label: 'TKR 10', value: '10' },
       ];
 
     const {selectedTicker,setSelectedTicker} = useContext(PriceContext);
